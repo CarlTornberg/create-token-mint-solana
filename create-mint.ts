@@ -2,16 +2,17 @@ import { Keypair, Connection, PublicKey } from "@solana/web3.js";
 import { createMint, createMintToInstruction } from "@solana/spl-token";
 import fs from "fs";
 import { log } from "console";
+import { homedir } from "os";
 
 const conn = new Connection("https://api.devnet.solana.com", "confirmed");
 
 await createNewMint();
 
 async function createNewMint() {
-  const signer = getKeypairFromFile("/home/bob/.config/solana/id.json");
-  const mint = getKeypairFromFile("/home/bob/.config/solana/mint.json");
+  const signer = getKeypairFromFile(homedir() + "/.config/solana/id.json");
+  const mint = getKeypairFromFile(homedir() + "/.config/solana/TimeJG4zN8g3pxVJuFVdbKtcz9HMfgRDF5KrgrZ5j4i.json");
   try {
-    await createMint(
+    const mintPubkey = await createMint(
       conn, 
       signer, 
       signer.publicKey, 
@@ -19,7 +20,7 @@ async function createNewMint() {
       6,
       mint
     );
-    console.log("New mint created:", mint);
+    console.log("New mint created:", mintPubkey);
   }
   catch(e) {
     log("Could not create mint:", e);
