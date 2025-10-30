@@ -3,9 +3,8 @@ import { createMint } from "@solana/spl-token";
 import fs from "fs";
 import { homedir } from "os";
 
-export async function createNewMint(conn: Connection): Promise<Keypair> {
-  const signer = getKeypairFromFile(homedir() + "/.config/solana/id.json");
-  const mint = getKeypairFromFile(homedir() + "/.config/solana/TimeJG4zN8g3pxVJuFVdbKtcz9HMfgRDF5KrgrZ5j4i.json");
+export async function createNewMint(conn: Connection, signer: Keypair): Promise<Keypair> {
+  const mint = getKeypairFromFile("/.config/solana/TimeJG4zN8g3pxVJuFVdbKtcz9HMfgRDF5KrgrZ5j4i.json");
   await createMint(
     conn, 
     signer, 
@@ -16,11 +15,11 @@ export async function createNewMint(conn: Connection): Promise<Keypair> {
   return mint;
 }
 
-function getKeypairFromFile(path: string) {
+export function getKeypairFromFile(path: string) {
   return Keypair.fromSecretKey(
     Uint8Array.from(
       JSON.parse(
-        fs.readFileSync(path, "utf8").toString()
+        fs.readFileSync(homedir() + path, "utf8").toString()
       )
     )
   );
