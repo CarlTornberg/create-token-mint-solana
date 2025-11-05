@@ -4,6 +4,7 @@ import fs from "fs";
 import { log } from "console";
 import { homedir } from "os";
 
+<<<<<<< HEAD
 const conn = new Connection("https://api.devnet.solana.com", "confirmed");
 
 await createNewMint();
@@ -26,6 +27,18 @@ async function createNewMint() {
     log("Could not create mint:", e);
   }
   
+=======
+export async function createNewMint(conn: Connection, signer: Keypair): Promise<Keypair> {
+  const mint = getKeypairFromFile("~/.config/solana/TimeVaultToken_old.json.json");
+  await createMint(
+    conn, 
+    signer, 
+    signer.publicKey, 
+    null,
+    6,
+    mint);
+  return mint;
+>>>>>>> 4bf8b89 (Minor changes)
 }
 
 function getKeypairFromFile(path: string) {
